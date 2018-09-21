@@ -1,0 +1,71 @@
+{
+  "quest": {
+    "name": "Save Rasheed",
+    "description": "Save Rasheed (and his beerd) whilest he battles ALIENS and sleep walks through San Diego!",
+    "checkins": [
+      {
+        "name": "Broadway Pier",
+        "description": "Look out over beautiful San Diego harbor, do you see Jason Mraz or Nick Cannon?",
+        "hint": "Boardwalk",
+        "coordinates": {
+          "lat": 32.71575,
+          "lng": -117.173389
+        },
+        "quadkeys": [
+          "0230132212123123023",
+          "0230132212123123201",
+          "0230132212123123023"
+        ]
+      },
+      {
+        "name": "Unconditional Surrender Statue",
+        "description": "There's a story behind this, not sure what it is...",
+        "hint": "Better go in 60/40",
+        "coordinates": { "lat": 32.712889, "lng": -117.175194 },
+        "quadkeys": ["0230132212123300111"]
+      },
+      {
+        "name": "Star of India",
+        "description": "This star is an ancient alien symbol for prosperity, power, and probing the universe!",
+        "hint": "Stand near star",
+        "coordinates": {
+          "lat": 32.715743,
+          "lng": -117.173381
+        },
+        "quadkeys": [
+          "0230132212123121023",
+          "0230132212123121201",
+          "0230132212123121210",
+          "0230132212123121032"
+        ]
+      },
+      {
+        "name": "Waterfront Park Fountain",
+        "description": "Park with a fountain, sound of water makes me tired.",
+        "hint": "Jump in to wake up!",
+        "coordinates": {
+          "lat": 32.71575,
+          "lng": -117.173389
+        },
+        "quadkeys": [
+          "0230132212123121012",
+          "0230132212123121010",
+          "0230132212123121011",
+          "0230132212123121013"
+        ]
+      },
+      {
+        "name": "Santa Fe Depot",
+        "description": "Rasheed once fell asleep on the train and woke up in La Jolla, true story...",
+        "hint": "Look at it from across the street to get that picture.",
+        "coordinates": { "lat": 32.716833, "lng": -117.169056 },
+        "quadkeys": [
+          "0230132212123123131",
+          "0230132212123123113",
+          "0230132212123132002",
+          "0230132212123132020"
+        ]
+      }
+    ]
+  }
+}
