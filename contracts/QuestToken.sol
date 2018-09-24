@@ -1,31 +1,39 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /*
     A transferrable Quest that lets you store, transfer, 
     and access information associated to a quest named from 32 character string
 */
-contract QuestToken is ERC721Token {
+contract QuestToken is ERC721Token, Ownable {
 
-    mapping (uint256 => address) questTokenAddress;
+    // IPFS hash representing metadata for this quest
+    string public questMetadata;
+
+    // Number of tokens to issue for addresses that complete the quest
+    uint public supplyRemaining;
+
     /*
         Constructs a Quest to store files 
     */
-    constructor() 
+    constructor(_name, _symbol, _supply, _questMetadata) 
         public 
-        ERC721Token("IPFS Quest", "IQ")
+        ERC721Token(_name, _symbol)
     {
+        supplyRemaining = _supply;
+        questMetadata = _questMetadata;
     }
 
-    event QuestCreated(string quest, uint indexed questId, address indexed owner, string ipfs);
+    event QuestCompleted(address hero, uint rewardToken, string proof);
 
     /* 
         Takes a string and converts to binary uint
         This is to be used as the NFT key
         @param _s - string to convert to a uint256 integer
     */
-    function encodeQuestId(string _s) 
+    function encodeTokenId(string _s) 
         public 
         pure 
         returns (uint) 
@@ -43,46 +51,45 @@ contract QuestToken is ERC721Token {
     /* 
         Mints a token with associated data and assigns ownership
         @param _quest - the Name of the Quest to store
-        @param _data - the data to put in the Quest
+        @param _proof - the proof of successful completion of the quest
     */
-    function createQuest(
-        string _quest,
-        string _data
+    function completeQuest(
+        address _hero,
+        string _tokenGenetics,
+        string _proof
     )
+        onlyOwner
         public
     {
-        uint questId = encodeQuestId(_quest);
-        if (!exists(questId)) {
-            _mint(msg.sender, questId);
-        }
-        require (ownerOf(questId) == msg.sender, "Sender must own Quest to modify it");
-        _setTokenURI(questId, _data);
-        emit QuestCreated(_quest, questId, msg.sender, _data);
+        uint rewardToken = encodeTokenId(_tokenGenetics);
+        _mint(_hero, rewardToken);
+        _setTokenURI(rewardToken, _proof);
+        emit QuestCompleted(_hero, rewardToken, _proof);
     }
 
     /* 
-        Returns Quest contents
-        @param _quest The Quest to inspect
+        Returns Token contents
+        @param _tokenGenetics the string value of the token
     */
-    function questData(
-        string _quest
+    function tokenData(
+        string _tokenGenetics
     )
         public
         view
         returns (string)
     {
-        uint questId = encodeQuestId(_quest);
-        return tokenURIs[questId];
+        uint tokenId = encodeTokenId(_tokenGenetics);
+        return tokenURIs[tokenId];
     }
 
     /* 
-        Returns Quest contents
-        @param _questId The id of the Quest to inspect
+        Returns Quest Token contents
+        @param _tokenId The id of the token to inspect
     */
-    function questDataFromQuestId(
-        uint _questId
+    function tokenDataFromId(
+        uint _tokenId
     )
     public view returns (string) {
-        return tokenURIs[_questId];
+        return tokenURIs[_tokenId];
     }
 }
