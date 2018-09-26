@@ -1,11 +1,13 @@
 {
   "quest": {
-    "previousQuest": "QmP2Vs8sAHvTcb975KjK2HouYwfF4rLoavusPqLB6u84WT",
+    "createdAt": "1537896650125",
+    "previousQuest": "QmUC7j9U8jAm6GzymtobvZZ7zs4XEUtSaaZAayXLL66E71",
     "name": "Save Rasheed",
     "description": "Save Rasheed (and his beerd) whilest he battles ALIENS and sleep walks through San Diego!",
     "checkins": [
       {
         "name": "Broadway Pier",
+        "id": "poi.2362169",
         "description": "Look out over beautiful San Diego harbor, do you see Jason Mraz or Nick Cannon?",
         "hint": "Boardwalk",
         "coordinates": {
@@ -20,13 +22,18 @@
       },
       {
         "name": "Unconditional Surrender Statue",
+        "id": "poi.2364557",
         "description": "There's a story behind this, not sure what it is...",
         "hint": "Better go in 60/40",
-        "coordinates": { "lat": 32.712889, "lng": -117.175194 },
+        "coordinates": {
+          "lat": 32.712889,
+          "lng": -117.175194
+        },
         "quadkeys": ["0230132212123300111"]
       },
       {
         "name": "Star of India",
+        "id": "poi.2361903",
         "description": "This star is an ancient alien symbol for prosperity, power, and probing the universe!",
         "hint": "Stand near star",
         "coordinates": {
@@ -42,6 +49,7 @@
       },
       {
         "name": "Waterfront Park Fountain",
+        "id": "poi.2364970",
         "description": "Park with a fountain, sound of water makes me tired.",
         "hint": "Jump in to wake up!",
         "coordinates": {
@@ -57,9 +65,13 @@
       },
       {
         "name": "Santa Fe Depot",
+        "id": "poi.2360370",
         "description": "Rasheed once fell asleep on the train and woke up in La Jolla, true story...",
         "hint": "Look at it from across the street to get that picture.",
-        "coordinates": { "lat": 32.716833, "lng": -117.169056 },
+        "coordinates": {
+          "lat": 32.716833,
+          "lng": -117.169056
+        },
         "quadkeys": [
           "0230132212123123131",
           "0230132212123123113",

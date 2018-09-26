@@ -18,12 +18,12 @@ contract QuestToken is ERC721Token, Ownable {
     /*
         Constructs a Quest to store files 
     */
-    constructor(_name, _symbol, _supply, _questMetadata) 
+    constructor(string _name, string _symbol, string _metadata, uint _supply) 
         public 
         ERC721Token(_name, _symbol)
     {
         supplyRemaining = _supply;
-        questMetadata = _questMetadata;
+        questMetadata = _metadata;
     }
 
     event QuestCompleted(address hero, uint rewardToken, string proof);
@@ -49,8 +49,8 @@ contract QuestToken is ERC721Token, Ownable {
     }
 
     /* 
-        Mints a token with associated data and assigns ownership
-        @param _quest - the Name of the Quest to store
+        The oracle or owner wallet can complete quest after validating the proof from the hero
+        @param _tokenGenetics - the token ot be generated.
         @param _proof - the proof of successful completion of the quest
     */
     function completeQuest(
@@ -61,9 +61,12 @@ contract QuestToken is ERC721Token, Ownable {
         onlyOwner
         public
     {
+        require (balanceOf(_hero) == 0, "Hero may only complete quest once.");
+        require (supplyRemaining > 0, "There must be available tokens remaining.");
         uint rewardToken = encodeTokenId(_tokenGenetics);
         _mint(_hero, rewardToken);
         _setTokenURI(rewardToken, _proof);
+        supplyRemaining -= 1;
         emit QuestCompleted(_hero, rewardToken, _proof);
     }
 

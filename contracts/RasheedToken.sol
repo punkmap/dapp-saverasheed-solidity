@@ -1,41 +1,44 @@
 pragma solidity ^0.4.24;
 
+import "./QuestToken.sol";
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 
 /*
-    A transferrable Quest that lets you store, transfer, 
-    and access information associated to a quest named from 32 character string
+    Rasheed Token are tokens issued for completing the Save Rasheed quest!
+    see saverasheed.com
 */
 contract RasheedToken is QuestToken {
 
+    mapping (uint => bool) redeemed;
+    uint numberRedeemed = 0;
 
-    constructor(uint _supply, string questMetadata) 
+    constructor(string _questMetadata, uint _supply) 
       public 
-      QuestToken("Rasheed Token", "RT", supply, questMetadata)
+      QuestToken("Rasheed Token", "RT", _questMetadata, _supply)
     {
     }
 
-    function adjustSupply
+    function addSupply
     (
         uint _supply
     ) 
         public
         onlyOwner
     {
-        supplyRemaining = _supply;
+        supplyRemaining += _supply;
     }
 
-    function createRasheedToken
+
+    function redeemToken
     (
-        uint256 _tokenId, 
-        address _beneficiary,
-        string _questData
-    ) 
-        public 
-        onlyOwner
+        uint _tokenId
+    )
+        public
     {
-        require(supplyRemaining > 0, "No more tokens");
-        _mint(_beneficiary, _tokenId);
-        _setTokenURI(_tokenId, _questData);
+        require(msg.sender == owner || msg.sender == ownerOf(_tokenId), "Only redeemable by token owner or contract owner");
+        require (!redeemed[_tokenId], "Cannot redeem token already redeemed");
+        redeemed[_tokenId] = true;
+        numberRedeemed++;
     }
+    
 }

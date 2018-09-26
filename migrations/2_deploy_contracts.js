@@ -1,5 +1,11 @@
-const FungibleToken = artifacts.require(`FungibleToken.sol`)
+const RasheedToken = artifacts.require(`RasheedToken.sol`)
 
-module.exports = function (deployer, network, [owner1]) {
-  return deployer.deploy(FungibleToken, `Fun Token`, `FT`, 18, { from: owner1 })
+module.exports = function(deployer, network, [owner1]) {
+  console.log('Owner', owner1)
+  return deployer.deploy(
+    RasheedToken,
+    'QmUC7j9U8jAm6GzymtobvZZ7zs4XEUtSaaZAayXLL66E71',
+    20,
+    { from: owner1 },
+  )
 }
