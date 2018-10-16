@@ -1,11 +1,39 @@
 {
-  "checkin": {
-    "quest": "QmP2Vs8sAHvTcb975KjK2HouYwfF4rLoavusPqLB6u84WT",
-    "id": "poi.2362169",
-    "coordinates": {
-      "lat": 32.71575,
-      "lng": -117.173389
+  "quest": "QmP2Vs8sAHvTcb975KjK2HouYwfF4rLoavusPqLB6u84WT",
+  "previousChain": "QmP2Vs8sAHvTcb975KjK2HouYwfF4rLoavusPqLB6u84WT",
+  "checkinChain": [
+    {
+      "checkin": {
+        "createdAt": 12312312312312,
+        "id": "poi.2362169",
+        "coordinates": {
+          "lat": 32.71575,
+          "lng": -117.173389
+        },
+        "quadkey": "0230132212123123023"
+      }
     },
-    "quadkey": "0230132212123123023"
-  }
+    {
+      "checkin": {
+        "createdAt": 12312312318888,
+        "id": "poi.2362169",
+        "coordinates": {
+          "lat": 32.71575,
+          "lng": -117.173389
+        },
+        "quadkey": "0230132212123123023"
+      }
+    },
+    {
+      "checkin": {
+        "createdAt": 123123123129999,
+        "id": "poi.2362169",
+        "coordinates": {
+          "lat": 32.71575,
+          "lng": -117.173389
+        },
+        "quadkey": "0230132212123123023"
+      }
+    }
+  ]
 }
