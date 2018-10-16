@@ -27,6 +27,8 @@ module.exports = {
           mnemonic,
           `https://kovan.infura.io/v3/${infuraKey}`,
         ),
+      gas: 6986331,
+      gasPrice: 2000000000,
     },
     ropsten: {
       network_id: 3,
@@ -36,6 +38,7 @@ module.exports = {
           `https://ropsten.infura.io/${infuraKey}`,
         ),
       gas: 6986331,
+      gasPrice: 2000000000,
     },
     mainnet: {
       network_id: `1`,
