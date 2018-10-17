@@ -21,9 +21,8 @@ contract Quest is ERC721Token, Ownable {
         mapping (address => uint32) completionCounts;
     }
 
-
     mapping (uint => QuestMetadata) public metadata; 
-    mapping (uint => uint[]) public questTokens; 
+    mapping (uint  => uint[]) public questTokens; 
     QuestToken public token;
 
     /*
@@ -104,7 +103,7 @@ contract Quest is ERC721Token, Ownable {
     */
     function completeQuest(
         uint questId,
-        uint32 tokenCategory,
+        uint16 tokenCategory,
         address hero,
         string checkinProofs
     )
@@ -119,7 +118,7 @@ contract Quest is ERC721Token, Ownable {
         require (q.supplyRemaining > 0, "There must be available tokens remaining.");
         
         uint count = numQuestTokens(questId);
-        uint questToken = QuestLibrary.makeQuestToken(q.index, tokenCategory, uint192(count));
+        uint questToken = QuestLibrary.makeQuestToken(q.index, tokenCategory, 0, uint192(count));
         questTokens[questId].push(questToken);
 
         token.mint(questToken, hero, checkinProofs);
@@ -159,12 +158,12 @@ contract Quest is ERC721Token, Ownable {
     function _completePendingQuest
     (
         uint questId,
-        address hero,
+        address hero
     ) 
       private
     {
-      Proof storage p = pendingProofs[questId][hero];
-      if (p) {
+      Proof memory p = pendingProofs[questId][hero];
+      if (p.hero != address(0)) {
         ownerOf(questId).transfer(p.value);  // pay for cost of minting the token
         delete pendingProofs[questId][hero];
         emit PendingProofCompleted(questId, hero, p.value);

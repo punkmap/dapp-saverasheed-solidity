@@ -1,9 +1,10 @@
 {
   "quest": {
     "createdAt": "1537896650125",
-    "previousQuest": "QmUC7j9U8jAm6GzymtobvZZ7zs4XEUtSaaZAayXLL66E71",
+    "contracts": "QmXZQ4N3rPCGfRCYFPerDdoSePjZLB1q8RXPcpLQbQgZVs",
     "name": "Save Rasheed",
     "description": "Save Rasheed (and his beerd) whilest he battles ALIENS and sleep walks through San Diego!",
+    "decentralized": false,
     "checkins": [
       {
         "name": "Broadway Pier",

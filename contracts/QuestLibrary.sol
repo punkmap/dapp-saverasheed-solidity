@@ -24,14 +24,15 @@ library QuestLibrary {
     /*
         Lets you pack and arrange a uint256 with uint32 and uint224
     */
-    function makeQuestToken(uint32 questIndex, uint32 tokenCategory, uint192 tokenIndex) 
+    function makeQuestToken(uint32 questIndex, uint16 category, uint16 version, uint192 tokenIndex) 
         public pure
         returns (uint256)
     {
         uint256 a = questIndex * uint256(2) ** 224;
-        uint256 b = tokenCategory * uint256(2) ** 192;
+        uint256 b = category * uint256(2) ** 208;
+        uint256 c = version * uint256(2) ** 192;
 
-        return uint256(tokenIndex) | a | b;
+        return uint256(tokenIndex) | a | b | c;
     }
 
     function getQuestIndex(uint questToken) 
@@ -41,11 +42,18 @@ library QuestLibrary {
         return uint32(extractNBits(questToken, 32, 224));
     }
 
+    function getTokenVersion(uint questToken) 
+        public pure
+        returns (uint32)
+    {
+        return uint32(extractNBits(questToken, 16, 192));
+    }
+
     function getTokenCategory(uint questToken) 
         public pure
         returns (uint32)
     {
-        return uint32(extractNBits(questToken, 32, 192));
+        return uint32(extractNBits(questToken, 16, 208));
     }
 
     function getTokenIndex(uint questToken) 
