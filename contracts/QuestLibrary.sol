@@ -21,10 +21,36 @@ library QuestLibrary {
         return number;
     }
 
-    /*
-        Lets you pack and arrange a uint256 with uint32 and uint224
+    /* 
+        Takes a converts binary int converts to string
+        @param i - int to convert to a string
     */
-    function makeQuestToken(uint32 questIndex, uint16 category, uint16 version, uint192 tokenIndex) 
+    function decodeStr
+    (
+      uint binary
+    ) 
+      public pure 
+      returns (string)
+    {
+        uint num = binary;
+        bytes memory str = new bytes(32);
+        // get bytes
+        for (uint i = 0; i < 32; i++) {
+          str[i] = byte(num/(uint(2)**(8*i)));
+        }
+        //reverse byte array 
+        for (uint j = 0; j < str.length/2; j++) {
+          byte end = str[str.length - j - 1];
+          str[str.length - j - 1] = str[j];
+          str[j] = end;
+        }
+        return string(str);
+    }
+
+    /*
+        Lets you pack some necessary info into a quest token
+    */
+    function makeHeroToken(uint32 questIndex, uint16 category, uint16 version, uint192 tokenIndex) 
         public pure
         returns (uint256)
     {
@@ -65,6 +91,9 @@ library QuestLibrary {
 
     /*
         Lets you extract n bits starting at any point in a uint256
+        @param bigNum - The number to get bits from
+        @param n - The number of bits to take
+        @param starting - Where to start reading bits from
     */
     function extractNBits(
         uint256 bigNum, 

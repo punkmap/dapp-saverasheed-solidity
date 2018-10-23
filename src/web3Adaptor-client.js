@@ -59,8 +59,8 @@ export let web3
 export let currentUser
 
 export let QuestLibrary
-export let Quest
 export let QuestToken
+export let HeroToken
 
 
 const refreshContracts = async web3 =>
@@ -75,14 +75,6 @@ const refreshContracts = async web3 =>
 			addressQuestLibrary)
 			SmartContracts.push({name: 'QuestLibrary', contract: QuestLibrary, address: addressQuestLibrary})
 		}
-		const jsonQuest = require('./../build/contracts/Quest.json')
-		if (jsonQuest && jsonQuest.networks[netId]) {
-			const addressQuest = jsonQuest.networks[netId].address
-			Quest = new web3.eth.Contract(
-			jsonQuest.abi,
-			addressQuest)
-			SmartContracts.push({name: 'Quest', contract: Quest, address: addressQuest})
-		}
 		const jsonQuestToken = require('./../build/contracts/QuestToken.json')
 		if (jsonQuestToken && jsonQuestToken.networks[netId]) {
 			const addressQuestToken = jsonQuestToken.networks[netId].address
@@ -90,6 +82,14 @@ const refreshContracts = async web3 =>
 			jsonQuestToken.abi,
 			addressQuestToken)
 			SmartContracts.push({name: 'QuestToken', contract: QuestToken, address: addressQuestToken})
+		}
+		const jsonHeroToken = require('./../build/contracts/HeroToken.json')
+		if (jsonHeroToken && jsonHeroToken.networks[netId]) {
+			const addressHeroToken = jsonHeroToken.networks[netId].address
+			HeroToken = new web3.eth.Contract(
+			jsonHeroToken.abi,
+			addressHeroToken)
+			SmartContracts.push({name: 'HeroToken', contract: HeroToken, address: addressHeroToken})
 		}
 
     return Promise.resolve(SmartContracts)

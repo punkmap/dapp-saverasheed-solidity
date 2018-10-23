@@ -1,22 +1,17 @@
 {
   "quest": {
-    "id": "34300835732321530447673206707498306934859497509820544160359264568",
-    "name": "Save Rasheed - Spatial 2018",
-    "createdAt": "1537896650125",
-    "contracts": "Qmf35MKJgWLQrWUZQJ7trA69o2kp79bgND83rp8u5fmi4Q",
-    "tokenCategories": {
-      "type": "numQuestTokens",
-      "maxNumQuestTokens": [9, 29, 270]
-    },
-    "description": "Save Rasheed (and his beerd) whilest he battles ALIENS and sleep walks through San Diego!",
-    "decentralized": false,
+    "createdAt": "1539899405",
+    "contracts": "QmXZQ4N3rPCGfRCYFPerDdoSePjZLB1q8RXPcpLQbQgZVs",
+    "name": "Folsom Quest",
+    "description": "Epic journey on beautiful Folsom Trail",
+    "decentralized": true,
     "inOrderCompletion": false,
     "checkins": [
       {
-        "name": "Broadway Pier",
-        "id": "poi.2362169",
-        "description": "Look out over beautiful San Diego harbor, do you see Jason Mraz or Nick Cannon?",
-        "hint": "Boardwalk",
+        "name": "Power house",
+        "id": "powerhouse-folsom-ca-95630",
+        "description": "Come to the front and chat with the tour guide.",
+        "hint": "Where would your tour begin",
         "coordinates": {
           "lat": 32.71575,
           "lng": -117.173389
@@ -28,7 +23,7 @@
         ]
       },
       {
-        "name": "Unconditional Surrender Statue",
+        "name": "Secret Trail Point",
         "id": "poi.2364557",
         "description": "There's a story behind this, not sure what it is...",
         "hint": "Better go in 60/40",

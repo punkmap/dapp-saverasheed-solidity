@@ -1,54 +1,326 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721MetadataMintable.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721Enumerable.sol";
+
+import './HeroToken.sol';
 
 /*
-    A transferrable Quest that lets you store, transfer, 
-    and access information associated to a quest named from 32 character string
+    The Quest contract stores Quests as NFTs
+    It manages distribution of Quest Tokens according to the Quest owners
+    Quest Owners are the oracles to their Quests!
 */
-contract QuestToken is ERC721Token, Ownable {
+contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
+
+    struct QuestMetadata {
+        uint cost;
+        uint64 start;
+        uint64 end;
+        uint32 supplyRemaining;
+        uint32 repeatLimit;
+        uint32 index;
+        uint[] questTokens;
+        mapping (address => uint) heroQuestCompletions;
+    }
+
+    mapping (uint => QuestMetadata) public metadata; 
+    mapping (uint32 => uint) public questIdFromIndex; 
+    HeroToken public heroToken;
 
     /*
         Constructs a Quest to store files 
     */
-    constructor(address questContract) 
+    constructor() 
         public 
-        ERC721Token("Quest Token", "QT")
+        ERC721Metadata("Quest Token", "QT")
     {
-        owner = questContract;
     }
-    
+
+    event QuestCreated(uint questId, uint32 questIndex, uint32 tokenSupply, uint cost, string questData);
+    event QuestCompleted(uint questId, uint32 questIndex, uint token, address hero,  string proof);
+
+    function createQuest
+    (
+        uint questId,
+        uint cost,
+        uint64 questStart,
+        uint64 questEnd,
+        uint32 tokenSupply,
+        uint32 repeatLimit,
+        string questData,
+        address questLord
+    )
+        public
+    {
+        uint32 questNum = uint32(totalSupply());
+        require (totalSupply() < questNum + 1, "Max Quest supply hit");
+        uint32 supplyRemaining = tokenSupply;
+        if (supplyRemaining == 0) {
+          supplyRemaining -= 1; // set to maximum uint32 to create max supply of 4,294,967,296
+        }
+        QuestMetadata memory q = QuestMetadata(
+            cost,
+            questStart,
+            questEnd,
+            supplyRemaining,
+            repeatLimit,
+            questNum,
+            new uint[](0)
+        );
+        questIdFromIndex[questNum] = questId;
+        _mint(questLord, questId);
+        _setTokenURI(questId, questData);
+        metadata[questId] = q;
+        emit QuestCreated(questId, questNum, tokenSupply, cost, questData);
+    }
+
+    function setTokenContract
+    (
+      address tokenContract
+    )
+      public
+      onlyOwner
+    {
+      heroToken = HeroToken(tokenContract);
+    }
+
+    /*
+        Quest cannot be ongoing if there's no more supply or a start time or end time have been specified
+    */
+    function questInProgress
+    (
+        uint questId
+    )
+        public view
+        returns (bool)
+    {
+        QuestMetadata memory q = metadata[questId];
+        bool started = now > q.start;
+        bool notEnded = q.end == 0 || now < q.end;
+
+        return (q.supplyRemaining > 0 && started && notEnded);
+    }
+
     /* 
         An oracle can complete quest after validating the proof from the hero
-        @param tokenId - the token ot be generated.
+        @param questId - the quest identifier
+        @param tokenCategory - which type of token are we minting
+        @param hero - Who will receive the token if all is well
         @param checkinProofs - the proof of successful completion of the quest
     */
-    function mint(
-        uint tokenId,
+    function completeQuest(
+        uint questId,
+        uint16 tokenCategory,
         address hero,
         string checkinProofs
     )
         public
-        onlyOwner
+        returns (uint)
     {
-        // TODO - generate token with quest index
-        _mint(hero, tokenId);
-        _setTokenURI(tokenId, checkinProofs);
+        require (msg.sender == ownerOf(questId), "Only quest owner can complete quests");
+        QuestMetadata storage q = metadata[questId];
+        
+        require (q.repeatLimit == 0 || q.heroQuestCompletions[hero] < q.repeatLimit, "Hero may only complete quest up to repeat count.");
+        require (q.supplyRemaining > 0, "There must be available tokens remaining.");
+        uint32 index = q.index;
+        uint questToken = heroToken.mint(uint192(numQuestTokens(questId)), hero, index,  0, tokenCategory, checkinProofs);
+        q.heroQuestCompletions[hero] += 1;
+        q.questTokens.push(questToken);
+        q.supplyRemaining -= 1;
+        _removePendingAndReward(questId, hero);
+        emit QuestCompleted(questId, index, questToken, hero, checkinProofs);
+        return questToken;
     }
 
     /* 
-        Returns Quest Token contents
-        @param tokenId The id of the token to inspect
+        Returns completion counts by quest
+        @param questId - the quest
     */
-    function tokenData
+    function numQuestTokens
     (
-        uint tokenId
-    )
-        public view 
-        returns (string) 
+      uint questId
+    ) 
+      public view
+      returns (uint)
     {
-        return tokenURIs[tokenId];
+      return metadata[questId].questTokens.length;
+    }
+        /* 
+        Returns completion counts by quest by hero
+        @param questId - the quest
+        @param hero - return completion counts for the hero by quest
+    */
+
+    function numQuestCompletions
+    (
+      uint questId,
+      address hero
+    )
+      public view
+      returns (uint)
+    {
+      return metadata[questId].heroQuestCompletions[hero];
     }
 
+    /* 
+        Returns quest tokens by index
+        @param questId - the quest
+        @param index - index into quest token array
+    */
+    function questTokenAtIndex
+    (
+      uint questId,
+      uint index
+    ) 
+      public view
+      returns (uint)
+    {
+      return metadata[questId].questTokens[index];
+    }
+
+    
+    // Decentralized Quest submission and validation below
+
+    struct Proof {
+      address hero;
+      string proof;
+      uint value;
+    }
+
+    mapping (uint => mapping (address => Proof)) public pendingProofs; 
+    mapping (uint => bool) public approvedForReclaiming; 
+   
+    event ApprovalToggled(uint questId, bool approved);
+    event PendingProofSubmitted(uint questId, address hero, string proof);
+    event PendingProofRefunded(uint questId, address hero);
+    event PendingProofReclaimed(uint questId, address hero, uint value);
+    event PendingProofCompleted(uint questId, address hero, uint value);
+
+    /* 
+      Removes pending proofs for quest 
+    */
+    function _removePendingAndReward
+    (
+        uint questId,
+        address hero
+    ) 
+      private
+    {
+      Proof memory p = pendingProofs[questId][hero];
+      if (p.hero != address(0)) {
+        // pay for cost of minting the token
+        ownerOf(questId).transfer(p.value);  
+        delete pendingProofs[questId][hero];
+        emit PendingProofCompleted(questId, hero, p.value);
+      }
+    }
+
+    /* 
+        A hero can request refund on the contract
+        @param questId - the quest to request refunds for
+    */
+    function requestRefund
+    (
+      uint questId
+    )
+        public
+    {
+        Proof storage p = pendingProofs[questId][msg.sender];
+        require (p.hero == msg.sender, "Only hero can request refund");
+        address(this).transfer(p.value);
+        delete pendingProofs[questId][msg.sender];
+        emit PendingProofRefunded(questId, msg.sender);
+    }
+
+    /* 
+        A hero can submit proofs that they completed a quest at any time
+        @param questId - the quest to submit proofs for
+        @param checkinProofs - the IPFS hash of the proofs
+    */
+    function submitProofs(
+        uint questId,
+        string proofs
+    )
+        public
+        payable
+    {
+        QuestMetadata storage q = metadata[questId];
+        require (_exists(questId), "quest must exist");
+        require (q.cost <= msg.value, "must pass value greater than cost of quest");
+        require (q.repeatLimit == 0 || q.heroQuestCompletions[msg.sender] < q.repeatLimit, "Hero may only complete quest up to repeat count.");
+        require (q.supplyRemaining > 0, "There must be available tokens remaining.");
+        pendingProofs[questId][msg.sender] = Proof(msg.sender, proofs, msg.value);
+        emit PendingProofSubmitted(questId, msg.sender, proofs);
+    }
+
+    /* 
+        Approve the owner to reclaim lost funds on the contract and distribute accordingly
+        @param questId - the quest
+        @param isApproved - toggle on/off approval for the owner to reclaim
+    */
+    function approveReclaiming
+    (
+      uint questId,
+      bool isApproved
+    )
+      public
+    {
+      require (msg.sender == ownerOf(questId), "Only quest owner can approve/disapprove reclaiming");
+      approvedForReclaiming[questId] = isApproved;
+      emit ApprovalToggled(questId, isApproved);
+    }
+
+
+
+    /* 
+        Only owner can reclaim lost funds if approved to do so
+        @param questId - the quest
+        @param wallet - which wallet to reclaim funds for
+    */
+    function reclaimLostProofs
+    (
+      uint questId,
+      address wallet
+    )
+        public
+        onlyOwner
+    {
+        require (approvedForReclaiming[questId] == true, "owner must be approved by quest owner for reclaiming");
+        Proof storage p = pendingProofs[questId][wallet];
+        require (p.hero == wallet, "Wallet to be reclaimed must have pending proofs");
+        owner().transfer(p.value);
+        delete pendingProofs[questId][wallet];
+        emit PendingProofReclaimed(questId, wallet, p.value);
+    }
+
+    /*
+      Exposes ownership transfer so we can move the token contract to an 
+      upgraded Quest contract if need be.
+      @param newMinter - The new contract/address with minting responsibility
+    */
+    function addHeroMinter
+    (
+      address newMinter
+    ) 
+      onlyOwner
+      public
+    {
+      heroToken.addMinter(newMinter);
+    }
+
+    /*
+      Upon contract upgrade, or vulnerability, we can renounce minting from this contract.
+      upgraded Quest contract if need be.
+      @param newMinter - The new contract/address with minting responsibility
+    */
+    function renounceMinting
+    (
+      address newMinter
+    ) 
+      onlyOwner
+      public
+    {
+      heroToken.addMinter(newMinter);
+    }
 }
