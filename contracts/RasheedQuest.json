@@ -3,7 +3,9 @@
     "id": "34300835732321530447673206707498306934859497509820544160359264568",
     "name": "Save Rasheed - Spatial 2018",
     "createdAt": "1537896650125",
-    "contracts": "Qmf35MKJgWLQrWUZQJ7trA69o2kp79bgND83rp8u5fmi4Q",
+    "contracts": "QmU8LNN2We3Y9nApr5vYo3hjpy2je7T2yWniwRyvhkCsBv",
+    "checkinButton": "Blast Em!",
+    "checkinCompletion": "Threat Eliminated",
     "tokenCategories": {
       "type": "numQuestTokens",
       "maxNumQuestTokens": [9, 29, 270]
@@ -16,7 +18,8 @@
         "name": "Broadway Pier",
         "id": "poi.2362169",
         "description": "Look out over beautiful San Diego harbor, do you see Jason Mraz or Nick Cannon?",
-        "hint": "Boardwalk",
+        "hint": "Take a stroll down the boardwalk",
+        "image": "QmXAgZMDo9JdTkG6L3t7aKGgV2eNEFUSvx5cm38wEYLUzD",
         "coordinates": {
           "lat": 32.71575,
           "lng": -117.173389
@@ -32,6 +35,7 @@
         "id": "poi.2364557",
         "description": "There's a story behind this, not sure what it is...",
         "hint": "Better go in 60/40",
+        "image": "QmSp7wpJBaTFibcKqQ8HPgExx7nWr9ZmLEaBbvsfLjRXKd",
         "coordinates": {
           "lat": 32.712889,
           "lng": -117.175194
@@ -43,6 +47,7 @@
         "id": "poi.2361903",
         "description": "This star is an ancient alien symbol for prosperity, power, and probing the universe!",
         "hint": "Stand near star",
+        "image": "QmZsz4BJ4RPr7ZdnUUfZa34EFwDcrVdFHjh91yosd7zXYF",
         "coordinates": {
           "lat": 32.715743,
           "lng": -117.173381
@@ -59,6 +64,7 @@
         "id": "poi.2364970",
         "description": "Park with a fountain, sound of water makes me tired.",
         "hint": "Jump in to wake up!",
+        "image": "QmPP7bS1JmAF8b6JJ6MWX17oZkdtqBnPtQj3gaHcRDT4dP",
         "coordinates": {
           "lat": 32.71575,
           "lng": -117.173389
@@ -75,6 +81,7 @@
         "id": "poi.2360370",
         "description": "Rasheed once fell asleep on the train and woke up in La Jolla, true story...",
         "hint": "Look at it from across the street to get that picture.",
+        "image": "QmZ6M2EYpyG54oFgjvHfP91j5gZs7Vuo9Gn12noA7p7TZA",
         "coordinates": {
           "lat": 32.716833,
           "lng": -117.169056

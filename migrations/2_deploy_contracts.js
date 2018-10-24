@@ -10,8 +10,9 @@ function deployLibraries(deployer) {
 
 const saveRasheedQuestId =
   '34300835732321530447673206707498306934859497509820544160359264568'
-const saveRasheedQuestIPFS = 'QmerYJC8yrsmTHuu2p89nixw82NELpaYscQxNWJ8QrZwVz'
-const saveRasheedQuestLord = '0x2073edCF9eAfd08DcD8dD31BE9AD6673A31FeDc8'
+const saveRasheedQuestIPFS = 'QmVLGZhFZNACQfBZFUPgMvsXU7PiDnSBqgt7ob4AusXPuY'
+const saveRasheedQuestLord = '0x3D01dDdB4eBD0b521f0E4022DCbeF3cb9bc20FF2'
+// const saveRasheedQuestLord = '0x2073edCF9eAfd08DcD8dD31BE9AD6673A31FeDc8'
 
 module.exports = function(deployer, network, [owner1]) {
   console.log('Owner', owner1)
@@ -27,7 +28,6 @@ module.exports = function(deployer, network, [owner1]) {
     })
     .then(async quest => {
       await quest.setTokenContract(HeroToken.address, { from: owner1 })
-      console.log('Set Token Contract', HeroToken.address)
       return quest.createQuest(
         saveRasheedQuestId,
         0,
