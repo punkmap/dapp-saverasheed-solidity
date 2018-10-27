@@ -28,7 +28,7 @@ contract HeroToken is ERC721MetadataMintable, ERC721Enumerable {
         @param proofs - the proof of successful completion of the quest
     */
     function mint(
-        uint192 tokenIndex,
+        uint192 tokenData,
         address hero,
         uint32 questIndex,
         uint16 tokenVersion,
@@ -39,7 +39,7 @@ contract HeroToken is ERC721MetadataMintable, ERC721Enumerable {
         onlyMinter
         returns (uint)
     {
-        uint token = QuestLibrary.makeHeroToken(questIndex, tokenCategory, tokenVersion, tokenIndex);
+        uint token = QuestLibrary.makeHeroToken(questIndex, tokenCategory, tokenVersion, tokenData);
         require(mintWithTokenURI(hero, token, proofs), "Cannot mint this token");
         return token;
     }

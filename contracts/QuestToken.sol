@@ -20,7 +20,7 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
         uint32 supplyRemaining;
         uint32 repeatLimit;
         uint32 index;
-        uint[] questTokens;
+        uint[] heroTokens;
         mapping (address => uint) heroQuestCompletions;
     }
 
@@ -120,41 +120,40 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
         require (msg.sender == ownerOf(questId), "Only quest owner can complete");
         QuestMetadata storage q = metadata[questId];   
         require (q.repeatLimit == 0 || q.heroQuestCompletions[hero] < q.repeatLimit, "Hero can complete quest up to limit");
-        require (q.supplyRemaining > 0, "No more tokens");
+        require (questInProgress(questId), "Quest must be in progress");
         
         // Mint token and update Quest Metadata
         uint32 index = q.index;
-        uint questToken = heroToken.mint(uint192(numQuestTokens(questId)), hero, index,  0, tokenCategory, checkinProofs);
+        uint token = heroToken.mint(uint192(numHeroTokens(questId)), hero, index,  0, tokenCategory, checkinProofs);
         q.heroQuestCompletions[hero] += 1;
-        q.questTokens.push(questToken);
+        q.heroTokens.push(token);
         q.supplyRemaining -= 1;
 
         // If decentralized quest, remove reward
         _removePendingAndReward(questId, hero);
-
-        emit QuestCompleted(questId, index, questToken, hero, checkinProofs);
-        return questToken;
+        emit QuestCompleted(questId, index, token, hero, checkinProofs);
+        return token;
     }
 
     /* 
         Returns completion counts by quest
         @param questId - the quest
     */
-    function numQuestTokens
+    function numHeroTokens
     (
       uint questId
     ) 
       public view
       returns (uint)
     {
-      return metadata[questId].questTokens.length;
+      return metadata[questId].heroTokens.length;
     }
-        /* 
+    
+    /* 
         Returns completion counts by quest by hero
         @param questId - the quest
         @param hero - return completion counts for the hero by quest
     */
-
     function numQuestCompletions
     (
       uint questId,
@@ -167,11 +166,11 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
     }
 
     /* 
-        Returns quest tokens by index
+        Returns Hero tokens by index
         @param questId - the quest
-        @param index - index into quest token array
+        @param index - index into hero token array
     */
-    function questTokenAtIndex
+    function heroToken
     (
       uint questId,
       uint index
@@ -179,7 +178,7 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
       public view
       returns (uint)
     {
-      return metadata[questId].questTokens[index];
+      return metadata[questId].heroTokens[index];
     }
 
     
@@ -261,7 +260,7 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
         require (_exists(questId), "quest must exist");
         require (q.cost <= msg.value, "incorrect value passed");
         require (q.repeatLimit == 0 || q.heroQuestCompletions[msg.sender] < q.repeatLimit, "Hero can complete quest up to repeat count");
-        require (q.supplyRemaining > 0, "No more tokens");
+        require (questInProgress(questId), "Quest must be in progress");
         uint proofHash = uint(keccak256(abi.encodePacked(proofs)));
         require (submittedProof[proofHash] == false, "Identicle proof submitted");
         require (pendingProofs[questId][msg.sender].hero == address(0), "Only one pending proof per quest");
