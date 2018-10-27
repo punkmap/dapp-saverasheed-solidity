@@ -1,41 +1,39 @@
-const Quest = artifacts.require(`Quest.sol`)
-const QuestLibrary = artifacts.require(`QuestLibrary.sol`)
 const QuestToken = artifacts.require(`QuestToken.sol`)
+const QuestLibrary = artifacts.require(`QuestLibrary.sol`)
+const HeroToken = artifacts.require(`HeroToken.sol`)
 
-function deployLibraries(deployer) {
-  return deployer.deploy([QuestLibrary]).then(() => {
-    return deployer.link(QuestLibrary, [Quest])
-  })
+function deployLibraries (deployer) {
+  return deployer
+    .deploy([QuestLibrary])
+    .then(() => deployer.link(QuestLibrary, [HeroToken]))
 }
 
-const saveRasheedQuestId = '25805080724369420902507832676'
+const saveRasheedQuestId = `34300835732321530447673206707498306934859497509820544160359264568`
+const saveRasheedQuestIPFS = `QmVLGZhFZNACQfBZFUPgMvsXU7PiDnSBqgt7ob4AusXPuY`
+const saveRasheedQuestLord = `0x3D01dDdB4eBD0b521f0E4022DCbeF3cb9bc20FF2`
+// const saveRasheedQuestLord = '0x2073edCF9eAfd08DcD8dD31BE9AD6673A31FeDc8'
 
-module.exports = function(deployer, network, [owner1]) {
-  console.log('Owner', owner1)
+module.exports = function (deployer, network, [owner1]) {
+  console.log(`Owner`, owner1)
   return deployLibraries(deployer)
-    .then(() => {
-      return deployer.deploy(Quest, { from: owner1 })
-    })
-    .then(() => {
-      return deployer.deploy(QuestToken, Quest.address, { from: owner1 })
-    })
-    .then(() => {
-      return Quest.deployed()
-    })
-    .then(async quest => {
-      await quest.setTokenContract(QuestToken.address, { from: owner1 })
+    .then(() => deployer.deploy(QuestToken, { from: owner1 }))
+    .then(() => deployer.deploy(HeroToken, QuestToken.address, { from: owner1 }))
+    .then(() => QuestToken.deployed())
+    .then(async (quest) => {
+      await quest.setTokenContract(HeroToken.address, { from: owner1 })
       return quest.createQuest(
         saveRasheedQuestId,
         0,
         0,
         0,
-        400,
+        300,
         1,
-        'QmUC7j9U8jAm6GzymtobvZZ7zs4XEUtSaaZAayXLL66E71',
-        { from: owner1 },
+        saveRasheedQuestIPFS,
+        saveRasheedQuestLord,
+        { from: owner1 }
       )
     })
-    .catch(err => {
-      console.log('Problem Deploying', err)
+    .catch((err) => {
+      console.log(`Problem Deploying`, err)
     })
 }

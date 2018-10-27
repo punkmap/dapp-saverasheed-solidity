@@ -1,39 +1,32 @@
 {
   "quest": "QmP2Vs8sAHvTcb975KjK2HouYwfF4rLoavusPqLB6u84WT",
-  "previousChain": "QmP2Vs8sAHvTcb975KjK2HouYwfF4rLoavusPqLB6u84WT",
-  "checkinChain": [
+  "checkins": [
     {
-      "checkin": {
-        "createdAt": 12312312312312,
-        "id": "poi.2362169",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
-        "quadkey": "0230132212123123023"
-      }
+      "createdAt": 12312312312312,
+      "id": "poi.2362169",
+      "coordinates": {
+        "lat": 32.71575,
+        "lng": -117.173389
+      },
+      "quadkey": "0230132212123123023"
     },
     {
-      "checkin": {
-        "createdAt": 12312312318888,
-        "id": "poi.2362169",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
-        "quadkey": "0230132212123123023"
-      }
+      "createdAt": 12312312318888,
+      "id": "poi.2362170",
+      "coordinates": {
+        "lat": 32.71575,
+        "lng": -117.173389
+      },
+      "quadkey": "0230132212123123023"
     },
     {
-      "checkin": {
-        "createdAt": 123123123129999,
-        "id": "poi.2362169",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
-        "quadkey": "0230132212123123023"
-      }
+      "createdAt": 123123123129999,
+      "id": "poi.2362171",
+      "coordinates": {
+        "lat": 32.71575,
+        "lng": -117.173389
+      },
+      "quadkey": "0230132212123123023"
     }
   ]
 }
