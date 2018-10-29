@@ -1,7 +1,6 @@
 {
-  "name": "sample-template-solidity",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@xyo-network/dapp-saverasheed-solidity",
+  "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -13,12 +12,14 @@
     "truffle-hdwallet-provider": "^0.0.6"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "babel src --out-dir .compiled --source-maps --watch"
+    "test": "truffle test",
+    "compile": "truffle compile"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "chai-bignumber": "^2.0.2"
+    "chai-bignumber": "^2.0.2",
+    "ganache-cli": "^6.1.8",
+    "truffle": "^4.1.14"
   }
 }

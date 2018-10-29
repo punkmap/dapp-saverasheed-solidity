@@ -236,10 +236,11 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
         uint proofHash = uint(keccak256(abi.encodePacked(p.proof)));
         require (submittedProof[proofHash], "No pending proof to refund");
 
+        msg.sender.transfer(p.value);
+        
         // delete submitted proof and pending proof
         delete submittedProof[proofHash];
         delete pendingProofs[questId][msg.sender];
-        address(this).transfer(p.value);
 
         emit PendingProofRefunded(questId, msg.sender);
     }
@@ -258,12 +259,12 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
     {
         QuestMetadata storage q = metadata[questId];
         require (_exists(questId), "quest must exist");
-        require (q.cost <= msg.value, "incorrect value passed");
-        require (q.repeatLimit == 0 || q.heroQuestCompletions[msg.sender] < q.repeatLimit, "Hero can complete quest up to repeat count");
+        require (q.cost <= msg.value, "Incorrect value passed");
+        require (q.repeatLimit == 0 || q.heroQuestCompletions[msg.sender] < q.repeatLimit, "Over repeat limit");
         require (questInProgress(questId), "Quest must be in progress");
         uint proofHash = uint(keccak256(abi.encodePacked(proofs)));
         require (submittedProof[proofHash] == false, "Identicle proof submitted");
-        require (pendingProofs[questId][msg.sender].hero == address(0), "Only one pending proof per quest");
+        require (pendingProofs[questId][msg.sender].hero == address(0), "One pending proof per quest");
         submittedProof[proofHash] = true;
         // add pending proof
         pendingProofs[questId][msg.sender] = Proof(msg.sender, proofs, msg.value, block.number);
@@ -313,8 +314,7 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
     }
 
     /*
-      Exposes ownership transfer so we can move the token contract to an 
-      upgraded Quest contract if need be.
+      Allow minting from upgraded or alternate quest token contracts.
       @param newMinter - The new contract/address with minting responsibility
     */
     function addHeroMinter
@@ -328,8 +328,7 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
     }
 
     /*
-      Upon contract upgrade, or vulnerability, we can renounce minting from this contract.
-      upgraded Quest contract if need be.
+      If contract is vulnerable to some
       @param newMinter - The new contract/address with minting responsibility
     */
     function renounceMinting

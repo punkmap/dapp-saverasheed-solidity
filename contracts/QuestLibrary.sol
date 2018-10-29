@@ -34,23 +34,28 @@ library QuestLibrary {
     {
         uint num = binary;
         bytes memory str = new bytes(32);
+        uint8 newLen = 32;
         // get bytes
-        for (uint i = 0; i < 32; i++) {
-          str[i] = byte(num/(uint(2)**(8*i)));
+        for (uint8 i = 0; i < 32; i++) {
+          byte val = byte(num/(uint(2)**(8*i)));
+          if (val == 0) {
+            newLen = i;
+            break;
+          }
+          str[i] = val;
         }
+        bytes memory retstr = new bytes(newLen);
         //reverse byte array 
-        for (uint j = 0; j < str.length/2; j++) {
-          byte end = str[str.length - j - 1];
-          str[str.length - j - 1] = str[j];
-          str[j] = end;
+        for (uint8 j = newLen; j > 0; j--) {
+          retstr[j-1] = str[newLen - j];
         }
-        return string(str);
+        return string(retstr);
     }
 
     /*
         Lets you pack some necessary info into a quest token
     */
-    function makeHeroToken(uint32 questIndex, uint16 category, uint16 version, uint192 tokenData) 
+    function makeHeroToken(uint192 tokenData, uint32 questIndex, uint16 category, uint16 version) 
         public pure
         returns (uint256)
     {
@@ -58,7 +63,14 @@ library QuestLibrary {
         uint256 b = category * uint256(2) ** 208;
         uint256 c = version * uint256(2) ** 192;
 
-        return uint256(tokenData) | a | b | c;
+        return tokenData | a | b | c;
+    }
+
+    function getTokenData(uint questToken) 
+        public pure
+        returns (uint32)
+    {
+        return uint32(extractNBits(questToken, 192, 0));
     }
 
     function getQuestIndex(uint questToken) 
@@ -68,13 +80,6 @@ library QuestLibrary {
         return uint32(extractNBits(questToken, 32, 224));
     }
 
-    function getTokenVersion(uint questToken) 
-        public pure
-        returns (uint32)
-    {
-        return uint32(extractNBits(questToken, 16, 192));
-    }
-
     function getTokenCategory(uint questToken) 
         public pure
         returns (uint32)
@@ -82,11 +87,11 @@ library QuestLibrary {
         return uint32(extractNBits(questToken, 16, 208));
     }
 
-    function getTokenData(uint questToken) 
+    function getTokenVersion(uint questToken) 
         public pure
         returns (uint32)
     {
-        return uint32(extractNBits(questToken, 192, 0));
+        return uint32(extractNBits(questToken, 16, 192));
     }
 
     /*

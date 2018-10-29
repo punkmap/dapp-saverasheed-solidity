@@ -20,10 +20,6 @@
         "description": "Look out over beautiful San Diego harbor, do you see Jason Mraz or Nick Cannon?",
         "hint": "Take a stroll down the boardwalk",
         "image": "QmXAgZMDo9JdTkG6L3t7aKGgV2eNEFUSvx5cm38wEYLUzD",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
         "quadkeys": [
           "0230132212123123023",
           "0230132212123123201",
@@ -36,10 +32,6 @@
         "description": "There's a story behind this, not sure what it is...",
         "hint": "Better go in 60/40",
         "image": "QmSp7wpJBaTFibcKqQ8HPgExx7nWr9ZmLEaBbvsfLjRXKd",
-        "coordinates": {
-          "lat": 32.712889,
-          "lng": -117.175194
-        },
         "quadkeys": ["0230132212123300111"]
       },
       {
@@ -48,10 +40,6 @@
         "description": "This star is an ancient alien symbol for prosperity, power, and probing the universe!",
         "hint": "Stand near star",
         "image": "QmZsz4BJ4RPr7ZdnUUfZa34EFwDcrVdFHjh91yosd7zXYF",
-        "coordinates": {
-          "lat": 32.715743,
-          "lng": -117.173381
-        },
         "quadkeys": [
           "0230132212123121023",
           "0230132212123121201",
@@ -65,10 +53,6 @@
         "description": "Park with a fountain, sound of water makes me tired.",
         "hint": "Jump in to wake up!",
         "image": "QmPP7bS1JmAF8b6JJ6MWX17oZkdtqBnPtQj3gaHcRDT4dP",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
         "quadkeys": [
           "0230132212123121012",
           "0230132212123121010",
@@ -82,10 +66,6 @@
         "description": "Rasheed once fell asleep on the train and woke up in La Jolla, true story...",
         "hint": "Look at it from across the street to get that picture.",
         "image": "QmZ6M2EYpyG54oFgjvHfP91j5gZs7Vuo9Gn12noA7p7TZA",
-        "coordinates": {
-          "lat": 32.716833,
-          "lng": -117.169056
-        },
         "quadkeys": [
           "0230132212123123131",
           "0230132212123123113",
