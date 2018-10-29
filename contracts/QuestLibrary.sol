@@ -34,17 +34,22 @@ library QuestLibrary {
     {
         uint num = binary;
         bytes memory str = new bytes(32);
+        uint8 newLen = 32;
         // get bytes
-        for (uint i = 0; i < 32; i++) {
-          str[i] = byte(num/(uint(2)**(8*i)));
+        for (uint8 i = 0; i < 32; i++) {
+          byte val = byte(num/(uint(2)**(8*i)));
+          if (val == 0) {
+            newLen = i;
+            break;
+          }
+          str[i] = val;
         }
+        bytes memory retstr = new bytes(newLen);
         //reverse byte array 
-        for (uint j = 0; j < str.length/2; j++) {
-          byte end = str[str.length - j - 1];
-          str[str.length - j - 1] = str[j];
-          str[j] = end;
+        for (uint8 j = newLen; j > 0; j--) {
+          retstr[j-1] = str[newLen - j];
         }
-        return string(str);
+        return string(retstr);
     }
 
     /*
