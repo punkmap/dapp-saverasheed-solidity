@@ -39,7 +39,7 @@ contract HeroToken is ERC721MetadataMintable, ERC721Enumerable {
         onlyMinter
         returns (uint)
     {
-        uint token = QuestLibrary.makeHeroToken(questIndex, tokenCategory, tokenVersion, tokenData);
+        uint token = QuestLibrary.makeHeroToken(tokenData, questIndex, tokenCategory, tokenVersion);
         require(mintWithTokenURI(hero, token, proofs), "Cannot mint this token");
         return token;
     }

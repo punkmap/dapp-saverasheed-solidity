@@ -55,7 +55,7 @@ library QuestLibrary {
     /*
         Lets you pack some necessary info into a quest token
     */
-    function makeHeroToken(uint32 questIndex, uint16 category, uint16 version, uint192 tokenData) 
+    function makeHeroToken(uint192 tokenData, uint32 questIndex, uint16 category, uint16 version) 
         public pure
         returns (uint256)
     {
@@ -63,7 +63,14 @@ library QuestLibrary {
         uint256 b = category * uint256(2) ** 208;
         uint256 c = version * uint256(2) ** 192;
 
-        return uint256(tokenData) | a | b | c;
+        return tokenData | a | b | c;
+    }
+
+    function getTokenData(uint questToken) 
+        public pure
+        returns (uint32)
+    {
+        return uint32(extractNBits(questToken, 192, 0));
     }
 
     function getQuestIndex(uint questToken) 
@@ -73,13 +80,6 @@ library QuestLibrary {
         return uint32(extractNBits(questToken, 32, 224));
     }
 
-    function getTokenVersion(uint questToken) 
-        public pure
-        returns (uint32)
-    {
-        return uint32(extractNBits(questToken, 16, 192));
-    }
-
     function getTokenCategory(uint questToken) 
         public pure
         returns (uint32)
@@ -87,11 +87,11 @@ library QuestLibrary {
         return uint32(extractNBits(questToken, 16, 208));
     }
 
-    function getTokenData(uint questToken) 
+    function getTokenVersion(uint questToken) 
         public pure
         returns (uint32)
     {
-        return uint32(extractNBits(questToken, 192, 0));
+        return uint32(extractNBits(questToken, 16, 192));
     }
 
     /*
