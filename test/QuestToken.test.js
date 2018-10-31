@@ -36,7 +36,7 @@ contract(
       this.afterStart = this.startTime + duration.seconds(1)
       this.duration = duration.weeks(2)
       this.endTime = this.startTime + this.duration
-      this.questCost = 1000
+      this.questCost = 10000000000000
       this.questSupply = 1
       this.repeatLimit = 1
     })

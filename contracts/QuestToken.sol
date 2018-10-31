@@ -202,7 +202,9 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
     event PendingProofCompleted(uint questId, address hero, uint value);
 
     /* 
-      Removes pending proofs for quest 
+      Removes pending proofs for quest and pays quest owner any pending value
+      @param questId - the quest
+      @param hero - who completed quest 
     */
     function _removePendingAndReward
     (
@@ -248,7 +250,7 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
     /* 
         A hero can submit proofs that they completed a quest at any time
         @param questId - the quest to submit proofs for
-        @param checkinProofs - the IPFS hash of the proofs
+        @param proofs - the IPFS hash of the proofs
     */
     function submitProofs(
         uint questId,
@@ -313,31 +315,4 @@ contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
         emit PendingProofReclaimed(questId, wallet, p.value);
     }
 
-    /*
-      Allow minting from upgraded or alternate quest token contracts.
-      @param newMinter - The new contract/address with minting responsibility
-    */
-    function addHeroMinter
-    (
-      address newMinter
-    ) 
-      onlyOwner
-      public
-    {
-      heroToken.addMinter(newMinter);
-    }
-
-    /*
-      If contract is vulnerable to some
-      @param newMinter - The new contract/address with minting responsibility
-    */
-    function renounceMinting
-    (
-      address newMinter
-    ) 
-      onlyOwner
-      public
-    {
-      heroToken.addMinter(newMinter);
-    }
 }
