@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721MetadataMintable.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721Metadata.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Enumerable.sol";
 
@@ -11,7 +11,7 @@ import './HeroToken.sol';
     It manages distribution of Quest Tokens according to the Quest owners
     Quest Owners are the oracles to their Quests!
 */
-contract QuestToken is ERC721MetadataMintable, ERC721Enumerable, Ownable {
+contract QuestToken is ERC721Enumerable, ERC721Metadata, Ownable {
 
     struct QuestMetadata {
         uint cost;

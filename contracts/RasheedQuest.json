@@ -1,25 +1,10 @@
 {
   "quest": {
     "id": "34300835732321530447673206707498306934859497509820544160359264568",
-    "image": "QmZaF9pNFGPthEJPvJV1J9C8J118mrQodt9xuSJxyRq4i9",
-    "intro": "<p>
-          A few months ago, Rasheed was on a geocache hike and he was abducted
-          by aliens. Rasheed escaped, but not without being tested with
-          radioactive materials beforehand! Rasheed made it back to Earth
-          safely, but now his beard has grown quite a bit! It glows green when
-          he is sleeping, and he occasionally sleepwalks. Sometimes, he will
-          sleepwalk all the way across the state of California!
-        </p>
-        <p>
-          Whenever he sleepwalks, aliens will arrive at his last known location;
-          they still need to do more tests and want to abduct him again!
-        </p>
-        <p>
-          Click the \"Quest Log\" below to view your first quest to Save Rasheed.
-        </p>",
     "name": "Save Rasheed - Spatial 2018",
+    "image": "QmX2GxvsxCzwcAYdqUvMvcrnzdHg2Gr6EPgTxUH6AR4647",
+    "intro": "<p>A few months ago, Rasheed was on a geocache hike and he was abducted by aliens. Rasheed escaped, but not without being tested with radioactive materials beforehand! Rasheed made it back to Earth safely, but now his beard has grown quite a bit! It glows green when he is sleeping, and he occasionally sleepwalks. Sometimes, he will sleepwalk all the way across the state of California!</p><p>Whenever he sleepwalks, aliens will arrive at his last known location.  They still need to do more tests and want to abduct him again!</p><p>Click the \"Quest Log\" below to view your first quest to Save Rasheed. </p>",
     "createdAt": "1537896650125",
-    "contracts": "QmU8LNN2We3Y9nApr5vYo3hjpy2je7T2yWniwRyvhkCsBv",
     "checkinButton": "Blast Em!",
     "checkinCompletion": "Threat Eliminated",
     "tokenCategories": {
