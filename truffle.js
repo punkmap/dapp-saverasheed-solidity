@@ -28,7 +28,7 @@ module.exports = {
           `https://kovan.infura.io/v3/${infuraKey}`,
         ),
       gas: 6986331,
-      gasPrice: 2000000000,
+      gasPrice: 4500000000,
     },
     ropsten: {
       network_id: 3,
@@ -38,7 +38,7 @@ module.exports = {
           `https://ropsten.infura.io/${infuraKey}`,
         ),
       gas: 6986331,
-      gasPrice: 2000000000,
+      gasPrice: 3500000000,
     },
     mainnet: {
       network_id: `1`,
@@ -48,7 +48,7 @@ module.exports = {
           `https://mainnet.infura.io/${infuraKey}`,
         ),
       gas: 4500000,
-      gasPrice: 2000000000,
+      gasPrice: 3500000000,
     },
   },
   solc: {

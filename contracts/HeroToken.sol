@@ -1,13 +1,14 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721MetadataMintable.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721Metadata.sol";
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Enumerable.sol";
+import "openzeppelin-solidity/contracts/access/roles/MinterRole.sol";
 import './QuestLibrary.sol';
 
 /*
     The NFT Token for Quests
 */
-contract HeroToken is ERC721MetadataMintable, ERC721Enumerable {
+contract HeroToken is ERC721Enumerable, ERC721Metadata, MinterRole {
 
     /*
         Constructs a Quest to store files
@@ -40,7 +41,8 @@ contract HeroToken is ERC721MetadataMintable, ERC721Enumerable {
         returns (uint)
     {
         uint token = QuestLibrary.makeHeroToken(tokenData, questIndex, tokenCategory, tokenVersion);
-        require(mintWithTokenURI(hero, token, proofs), "Cannot mint this token");
+        _mint(hero, token);
+        _setTokenURI(token, proofs);
         return token;
     }
 

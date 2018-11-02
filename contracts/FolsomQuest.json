@@ -11,11 +11,7 @@
         "name": "Power house",
         "id": "powerhouse-folsom-ca-95630",
         "description": "Come to the front and chat with the tour guide.",
-        "hint": "Where would your tour begin",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
+        "hint": "Where would the tour begin",
         "quadkeys": [
           "0230132212123123023",
           "0230132212123123201",
@@ -27,10 +23,6 @@
         "id": "poi.2364557",
         "description": "There's a story behind this, not sure what it is...",
         "hint": "Better go in 60/40",
-        "coordinates": {
-          "lat": 32.712889,
-          "lng": -117.175194
-        },
         "quadkeys": ["0230132212123300111"]
       },
       {
@@ -38,10 +30,6 @@
         "id": "poi.2361903",
         "description": "This star is an ancient alien symbol for prosperity, power, and probing the universe!",
         "hint": "Stand near star",
-        "coordinates": {
-          "lat": 32.715743,
-          "lng": -117.173381
-        },
         "quadkeys": [
           "0230132212123121023",
           "0230132212123121201",

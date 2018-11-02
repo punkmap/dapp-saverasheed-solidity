@@ -2,24 +2,26 @@ const QuestToken = artifacts.require(`QuestToken.sol`)
 const QuestLibrary = artifacts.require(`QuestLibrary.sol`)
 const HeroToken = artifacts.require(`HeroToken.sol`)
 
-function deployLibraries (deployer) {
+function deployLibraries(deployer) {
   return deployer
     .deploy([QuestLibrary])
     .then(() => deployer.link(QuestLibrary, [HeroToken]))
 }
 
 const saveRasheedQuestId = `34300835732321530447673206707498306934859497509820544160359264568`
-const saveRasheedQuestIPFS = `QmVLGZhFZNACQfBZFUPgMvsXU7PiDnSBqgt7ob4AusXPuY`
-const saveRasheedQuestLord = `0x3D01dDdB4eBD0b521f0E4022DCbeF3cb9bc20FF2`
-// const saveRasheedQuestLord = '0x2073edCF9eAfd08DcD8dD31BE9AD6673A31FeDc8'
+const saveRasheedQuestIPFS = `QmdC3394evbum1MHna49wMY5rGuN3wxvNUa9mXQMXxA5rx`
+// const saveRasheedQuestLord = `0x3D01dDdB4eBD0b521f0E4022DCbeF3cb9bc20FF2`
+const saveRasheedQuestLord = '0x2073edCF9eAfd08DcD8dD31BE9AD6673A31FeDc8'
 
-module.exports = function (deployer, network, [owner1]) {
+module.exports = function(deployer, network, [owner1]) {
   console.log(`Owner`, owner1)
   return deployLibraries(deployer)
     .then(() => deployer.deploy(QuestToken, { from: owner1 }))
-    .then(() => deployer.deploy(HeroToken, QuestToken.address, { from: owner1 }))
+    .then(() =>
+      deployer.deploy(HeroToken, QuestToken.address, { from: owner1 }),
+    )
     .then(() => QuestToken.deployed())
-    .then(async (quest) => {
+    .then(async quest => {
       await quest.setTokenContract(HeroToken.address, { from: owner1 })
       return quest.createQuest(
         saveRasheedQuestId,
@@ -30,10 +32,10 @@ module.exports = function (deployer, network, [owner1]) {
         1,
         saveRasheedQuestIPFS,
         saveRasheedQuestLord,
-        { from: owner1 }
+        { from: owner1 },
       )
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(`Problem Deploying`, err)
     })
 }
