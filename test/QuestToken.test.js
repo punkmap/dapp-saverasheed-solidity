@@ -190,7 +190,7 @@ contract(
       beforeEach(async () => {
         await createQuest().should.be.fulfilled
       })
-      it(`should accept up to one pending proof`, async () => {
+      it(`should accept up to one pending proof per hero`, async () => {
         const params = [
           saveRasheedQuestId,
           saveRasheedQuestIPFS,
@@ -198,13 +198,13 @@ contract(
         ]
         const params1 = [
           saveRasheedQuestId,
-          saveRasheedQuestIPFS,
-          { from: questHero2, value: this.questCost }
+          saveRasheedQuestIPFS1,
+          { from: questHero, value: this.questCost }
         ]
         await this.questToken.submitProofs(...params).should.be.fulfilled
         await this.questToken.submitProofs(...params1).should.not.be.fulfilled
       })
-      it(`should not allow identical proofs`, async () => {
+      it(`should not allow identical proofs by differing heros`, async () => {
         const params = [
           saveRasheedQuestId,
           saveRasheedQuestIPFS,
