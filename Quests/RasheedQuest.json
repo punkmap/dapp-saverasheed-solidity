@@ -7,10 +7,31 @@
     "createdAt": "1537896650125",
     "checkinButton": "Blast Em!",
     "checkinCompletion": "Threat Eliminated",
-    "tokenCategories": {
-      "type": "numQuestTokens",
-      "maxNumQuestTokens": [9, 29, 270]
-    },
+    "tokens": [
+      {
+        "name": "Default Token",
+        "image": "QmSCxy5dg7ckFDT9FPbPn7whJc6ZnfVZ8S5v7oyM9fdLV3",
+        "isDefault": true
+      },
+      {
+        "name": "Normal Token",
+        "image": "Qmf3zPM8x3bhtgUcHH2s1KmKX1VqLTFtYBjQQM798KyZcR",
+        "startIndex": 30,
+        "endIndex": 300
+      },
+      {
+        "name": "Hat Token",
+        "image": "Qmc1Ptq3TC2kZa4Mywau8kCpLe6VJVzpgrusFvzKo2SF15",
+        "startIndex": 10,
+        "endIndex": 30
+      },
+      {
+        "name": "Shwag Token",
+        "image": "QmWXL1GkzQ4nPKg3M5UsN67DoDwNv97RkdzVb21D6kvhRv",
+        "startIndex": 0,
+        "endIndex": 9
+      }
+    ],
     "description": "Save Rasheed (and his beerd) whilest he battles ALIENS and sleep walks through San Diego!",
     "decentralized": false,
     "inOrderCompletion": false,
@@ -24,7 +45,7 @@
         "quadkeys": [
           "0230132212123123023",
           "0230132212123123201",
-          "0230132212123123023"
+          "02301322121231230322"
         ]
       },
       {

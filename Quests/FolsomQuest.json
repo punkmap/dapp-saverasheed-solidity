@@ -1,8 +1,7 @@
 {
   "quest": {
     "createdAt": "1539899405",
-    "contracts": "QmXZQ4N3rPCGfRCYFPerDdoSePjZLB1q8RXPcpLQbQgZVs",
-    "name": "Folsom Quest",
+    "name": "Old Town Folsom",
     "description": "Epic journey on beautiful Folsom Trail",
     "decentralized": true,
     "inOrderCompletion": false,
@@ -21,15 +20,15 @@
       {
         "name": "Secret Trail Point",
         "id": "poi.2364557",
-        "description": "There's a story behind this, not sure what it is...",
-        "hint": "Better go in 60/40",
+        "description": "Take in the beauty of Lake Natoma",
+        "hint": "Sit down on the bench to rest your legs",
         "quadkeys": ["0230132212123300111"]
       },
       {
-        "name": "Star of India",
+        "name": "The Old Post-Office",
         "id": "poi.2361903",
-        "description": "This star is an ancient alien symbol for prosperity, power, and probing the universe!",
-        "hint": "Stand near star",
+        "description": "This was a functioning Post office.  It was in operation from 1859-1999",
+        "hint": "Stand in front",
         "quadkeys": [
           "0230132212123121023",
           "0230132212123121201",
@@ -38,14 +37,10 @@
         ]
       },
       {
-        "name": "Waterfront Park Fountain",
+        "name": "Escape Folsom Bar",
         "id": "poi.2364970",
-        "description": "Park with a fountain, sound of water makes me tired.",
-        "hint": "Jump in to wake up!",
-        "coordinates": {
-          "lat": 32.71575,
-          "lng": -117.173389
-        },
+        "description": "Best Escape Room in Folsom!",
+        "hint": "Order a drink at the bar",
         "quadkeys": [
           "0230132212123121012",
           "0230132212123121010",
@@ -54,14 +49,10 @@
         ]
       },
       {
-        "name": "Santa Fe Depot",
+        "name": "Under the Bridge",
         "id": "poi.2360370",
-        "description": "Rasheed once fell asleep on the train and woke up in La Jolla, true story...",
-        "hint": "Look at it from across the street to get that picture.",
-        "coordinates": {
-          "lat": 32.716833,
-          "lng": -117.169056
-        },
+        "description": "This is the largest of Folsom's 8 bridges, and was completed in 2015",
+        "hint": "Stand below the bridge",
         "quadkeys": [
           "0230132212123123131",
           "0230132212123123113",

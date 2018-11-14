@@ -9,7 +9,7 @@ function deployLibraries(deployer) {
 }
 
 const saveRasheedQuestId = `34300835732321530447673206707498306934859497509820544160359264568`
-const saveRasheedQuestIPFS = `QmdC3394evbum1MHna49wMY5rGuN3wxvNUa9mXQMXxA5rx`
+const saveRasheedQuestIPFS = `QmahtA1znuLidg5etWLpQ9dnpPwqWDGv2MwNoDG4wJcDjU`
 // const saveRasheedQuestLord = `0x3D01dDdB4eBD0b521f0E4022DCbeF3cb9bc20FF2`
 const saveRasheedQuestLord = '0x2073edCF9eAfd08DcD8dD31BE9AD6673A31FeDc8'
 
