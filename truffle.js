@@ -4,6 +4,7 @@ require(`babel-register`)({
 require(`babel-polyfill`)
 const HDWalletProvider = require(`truffle-hdwallet-provider`)
 require('dotenv').config() // Store environment-specific variable from '.env' to process.env
+const NonceTrackerSubprovider = require('web3-provider-engine/subproviders/nonce-tracker')
 
 // NOTE: If retreiving mnemonic from Metamask - use 1st wallet in profile list.
 
@@ -42,13 +43,18 @@ module.exports = {
     },
     mainnet: {
       network_id: `1`,
-      provider: () =>
-        new HDWalletProvider(
+      provider: () => {
+        const wallet = new HDWalletProvider(
           mnemonic,
           `https://mainnet.infura.io/${infuraKey}`,
-        ),
-      gas: 4500000,
-      gasPrice: 3500000000,
+        )
+        const nonceTracker = new NonceTrackerSubprovider()
+        wallet.engine._providers.unshift(nonceTracker)
+        nonceTracker.setEngine(wallet.engine)
+        return wallet
+      },
+      gas: 6986331,
+      gasPrice: 25000000000,
     },
   },
   solc: {

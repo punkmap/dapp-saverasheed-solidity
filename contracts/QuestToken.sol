@@ -25,7 +25,7 @@ contract QuestToken is ERC721Enumerable, ERC721Metadata, Ownable {
     }
 
     mapping (uint => QuestMetadata) public metadata; 
-    HeroToken public heroToken;
+    HeroToken public heroTokenContract;
 
     /*
         Constructs a Quest to store files 
@@ -80,7 +80,7 @@ contract QuestToken is ERC721Enumerable, ERC721Metadata, Ownable {
       public
       onlyOwner
     {
-      heroToken = HeroToken(tokenContract);
+      heroTokenContract = HeroToken(tokenContract);
     }
 
     /*
@@ -124,7 +124,7 @@ contract QuestToken is ERC721Enumerable, ERC721Metadata, Ownable {
         
         // Mint token and update Quest Metadata
         uint32 index = q.index;
-        uint token = heroToken.mint(uint192(numHeroTokens(questId)), hero, index,  0, tokenCategory, checkinProofs);
+        uint token = heroTokenContract.mint(uint192(numHeroTokens(questId)), hero, index,  0, tokenCategory, checkinProofs);
         q.heroQuestCompletions[hero] += 1;
         q.heroTokens.push(token);
         q.supplyRemaining -= 1;
